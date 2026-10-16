@@ -9,8 +9,16 @@ import org.wpilib.epilogue.Epilogue;
 import org.wpilib.epilogue.Logged;
 import org.wpilib.framework.OpModeRobot;
 
+import first.robot.mechanism.CounterMechanism;
+import first.robot.mechanism.LetterMechanism;
+import first.robot.mechanism.NumberMechanism;
+
 @Logged
 public class Robot extends OpModeRobot {
+  public final CounterMechanism counter = new CounterMechanism();
+  public final LetterMechanism letters = new LetterMechanism();
+  public final NumberMechanism numbers = new NumberMechanism();
+
   public Robot() {}
 
   @Override
