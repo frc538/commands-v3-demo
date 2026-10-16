@@ -16,4 +16,11 @@ public class CounterMechanism implements Mechanism {
         })
         .named("count");
     }
+
+    public Command reset() {
+        return run(coroutine -> {
+            mCount = 0;
+        })
+        .named("reset");
+    }
 }
