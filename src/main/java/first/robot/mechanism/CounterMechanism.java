@@ -14,6 +14,7 @@ public class CounterMechanism implements Mechanism {
                 coroutine.yield();
             }
         })
+        .withPriority(Command.DEFAULT_PRIORITY + 1)
         .named("count");
     }
 
