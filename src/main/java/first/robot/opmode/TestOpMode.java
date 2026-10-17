@@ -23,17 +23,17 @@ public class TestOpMode extends PeriodicOpMode {
 
     private Command testCompositions() {
         return Command.noRequirements(coroutine -> {
-            // awaitAll starts all commands provided and does not proceed until ALL are finished
-            coroutine.awaitAll(
+            // awaitAny starts all commands provided and proceeds as soon as ANY of them finish
+            coroutine.awaitAny(
                 mRobot.numbers.count(),
                 mRobot.letters.letters()
             );
 
-            // This is likely what was intended when the original fork-only example was first made
-            // This allows both commands to run in parallel until both are completed.
-            // One of the commands finishing sooner does not prevent the other command from executing
+            // This creates a parallel race, where many commands are running but the parent is allowed to proceed
+            // as soon as a single command finishes - and it doesn't matter which one
 
-            // This is similar to the fork-park example, EXCEPT the parent command does finish on its own
+            // This is similar to the fork-await example, but in this case, the "faster" command effectively
+            // gets to be the awaited command, no matter which command it is
         })
         .named("Composition Test");
     }
