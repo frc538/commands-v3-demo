@@ -17,6 +17,6 @@ public class TestOpMode extends PeriodicOpMode {
 
     @Override
     public void start() { 
-        mGamepad.button(0).whileTrue(mRobot.counter.count());
+        mRobot.counter.setDefaultCommand(mRobot.counter.count());
     }
 }
