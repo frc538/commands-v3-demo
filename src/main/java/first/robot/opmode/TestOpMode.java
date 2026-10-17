@@ -19,13 +19,16 @@ public class TestOpMode extends PeriodicOpMode {
 
     private Command testCompositions() {
         return Command.noRequirements(coroutine -> {
-            // This will run the count command, counting to 26 before moving on
-            coroutine.await(mRobot.numbers.count());
+            // This will start the count command to run in the background
+            coroutine.fork(mRobot.numbers.count());
 
-            // This will run the letters command, reciting the alphabet before moving on
-            coroutine.await(mRobot.letters.letters());
+            // This will start the letters command to run in the background
+            coroutine.fork(mRobot.letters.letters());
 
-            // await will not let the parent command proceed until the child command finishes
+            // fork allows the parent command to continue as soon as the child command starts
+            // unfortunately, if the parent command finished before the child commands do, they will be interrupted and will not finish normally
+
+            // In this case, the count and letters commands will terminate prematurely because they will no longer be in scope
         })
         .named("Composition Test");
     }
