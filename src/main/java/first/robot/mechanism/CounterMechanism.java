@@ -22,6 +22,7 @@ public class CounterMechanism implements Mechanism {
         return run(coroutine -> {
             mCount = 0;
         })
+        .withPriority(Command.HIGHEST_PRIORITY)
         .named("reset");
     }
 }
