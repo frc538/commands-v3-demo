@@ -23,17 +23,17 @@ public class TestOpMode extends PeriodicOpMode {
 
     private Command testCompositions() {
         return Command.noRequirements(coroutine -> {
-            // This will start the count command to run in the background
-            coroutine.fork(mRobot.numbers.count());
+            // awaitAll starts all commands provided and does not proceed until ALL are finished
+            coroutine.awaitAll(
+                mRobot.numbers.count(),
+                mRobot.letters.letters()
+            );
 
-            // This will start the letters command and not proceed until it is finished
-            coroutine.await(mRobot.letters.letters());
+            // This is likely what was intended when the original fork-only example was first made
+            // This allows both commands to run in parallel until both are completed.
+            // One of the commands finishing sooner does not prevent the other command from executing
 
-            // In this case, the letters are guaranteed to reach their natural conclusion
-            // The numbers are not though, because they were started via fork
-            // Notice in the NumberMechanism that the counter now goes to 100, which makes it obvious that the letters command 
-            // is what is keeping the parent command running for this example
-           
+            // This is similar to the fork-park example, EXCEPT the parent command does finish on its own
         })
         .named("Composition Test");
     }
