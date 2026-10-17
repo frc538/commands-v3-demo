@@ -1,5 +1,6 @@
 package first.robot.opmode;
 
+import org.wpilib.command3.Command;
 import org.wpilib.command3.button.CommandGamepad;
 import org.wpilib.opmode.PeriodicOpMode;
 import org.wpilib.opmode.Utility;
@@ -13,7 +14,13 @@ public class TestOpMode extends PeriodicOpMode {
 
     public TestOpMode(Robot robot) {
         mRobot = robot;
-        mRobot.counter.setDefaultCommand(mRobot.counter.count());
-        mGamepad.button(0).onTrue(mRobot.counter.reset());
+        mGamepad.button(0).onTrue(testCompositions());
+    }
+
+    private Command testCompositions() {
+        return Command.noRequirements(coroutine -> {
+
+        })
+        .named("Composition Test");
     }
 }
