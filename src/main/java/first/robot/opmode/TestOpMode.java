@@ -22,19 +22,14 @@ public class TestOpMode extends PeriodicOpMode {
             // This will start the count command to run in the background
             coroutine.fork(mRobot.numbers.count());
 
-            // This will start the letters command to run in the background
-            coroutine.fork(mRobot.letters.letters());
+            // This will start the letters command and not proceed until it is finished
+            coroutine.await(mRobot.letters.letters());
 
-            // fork allows the parent command to continue as soon as the child command starts
-            // unfortunately, if the parent command finished before the child commands do, they will be interrupted and will not finish normally
-
-            // Park is used so that the command will NEVER finish on its own
-            // It can be interrupted by another command cancelling it (due to priority rules, etc.)
-            // But it will not just "reach an end" on its own
-            coroutine.park();
-
-            // In this case, since the parent command is never finished or interrupted, the child commands are free to finish
-            // But the parent command continues to run even after they do.
+            // In this case, the letters are guaranteed to reach their natural conclusion
+            // The numbers are not though, because they were started via fork
+            // Notice in the NumberMechanism that the counter now goes to 100, which makes it obvious that the letters command 
+            // is what is keeping the parent command running for this example
+           
         })
         .named("Composition Test");
     }
