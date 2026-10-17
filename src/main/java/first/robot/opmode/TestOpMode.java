@@ -14,5 +14,6 @@ public class TestOpMode extends PeriodicOpMode {
     public TestOpMode(Robot robot) {
         mRobot = robot;
         mRobot.counter.setDefaultCommand(mRobot.counter.count());
+        mGamepad.button(0).onTrue(mRobot.counter.reset());
     }
 }
