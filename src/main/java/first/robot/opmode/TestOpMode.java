@@ -32,7 +32,13 @@ public class TestOpMode extends PeriodicOpMode {
             // fork allows the parent command to continue as soon as the child command starts
             // unfortunately, if the parent command finished before the child commands do, they will be interrupted and will not finish normally
 
-            // In this case, the count and letters commands will terminate prematurely because they will no longer be in scope
+            // Park is used so that the command will NEVER finish on its own
+            // It can be interrupted by another command cancelling it (due to priority rules, etc.)
+            // But it will not just "reach an end" on its own
+            coroutine.park();
+
+            // In this case, since the parent command is never finished or interrupted, the child commands are free to finish
+            // But the parent command continues to run even after they do.
         })
         .named("Composition Test");
     }
